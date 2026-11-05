@@ -7,6 +7,23 @@ load_dotenv()
 
 app = Flask(__name__)
 
+def html(amount_of_visitors):
+    html_template = f"""
+    <html>
+        <head>
+            <title>Kävijälaskuri</title>
+        </head>
+
+        <body>
+            <h2>Tervetuloa!</h2>
+
+            <p>Kävijää: {amount_of_visitors}</p>
+        </body>
+    </html>
+    """
+
+    return html_template
+
 @app.route('/')
 def home():
     conn = mysql.connector.connect(
@@ -28,7 +45,8 @@ def home():
     # Clean up
     cursor.close()
     conn.close()
-    return f"<h1>Kävijää: {amount_of_visitors}</h1>"
+    
+    return html(amount_of_visitors)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
