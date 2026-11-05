@@ -7,17 +7,61 @@ load_dotenv()
 
 app = Flask(__name__)
 
+#
+# Tyylit erotettuna muusta HTML:stä
+# Tämä, koska html-templaattimme käyttää F-stringiä {amount_of_visitors}:iin
+#       Eli sivuston kävijämäärän näyttämiseen.
+#
+# CSS tarvitsee aaltosulkeita tyylitysten määrittelyyn, joka ei toimi F-stringissä.
+def styles():
+    return """
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: sans-serif;
+                width: 100dvw;
+                display: flex;
+                justify-content: center;
+            }
+
+            .body-content {
+                width: 100%;
+                max-width: 1200px;
+                padding: 2.5rem 0;
+            }
+        </style>
+    """
+
 def html(amount_of_visitors):
     html_template = f"""
     <html>
         <head>
             <title>Kävijälaskuri</title>
+
+            {styles()}
         </head>
 
         <body>
-            <h2>Tervetuloa!</h2>
+            <main class='body-content'>
+                <h2>Tervetuloa!</h2>
 
-            <p>Kävijää: {amount_of_visitors}</p>
+                <p>
+                    Koodissa käytetään <code>environment variable</code> tyyppistä ratkaisua tietokantaan kirjautumiseen,
+                    sen sijaan että tunnukset olisivat suoraan koodissa (ja versionhallinnassa luettavissa),
+                    ovat ne <code>.env</code> tiedostossa piilossa.
+
+                    <br>
+
+                    <b>Kyseistä tiedostoa ei koskaan julkaista versionhallintaan.</b>
+                </p>
+
+                <p>Kävijää: {amount_of_visitors}</p>
+            </main>
         </body>
     </html>
     """
@@ -45,7 +89,7 @@ def home():
     # Clean up
     cursor.close()
     conn.close()
-    
+
     return html(amount_of_visitors)
 
 if __name__ == '__main__':
