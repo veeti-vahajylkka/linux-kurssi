@@ -403,6 +403,14 @@ cat > "$TEMP_FILE" <<EOF
     <p class="note">
         Week 3 – Linux Server Administration
     </p>
+
+    <a
+        href="https://github.com/veeti-vahajylkka/linux-kurssi/tree/main/viikko%203"
+        rel="noreferrer noopener nofollow"
+        target="_blank"
+    >
+        Repository on Github
+    </a>
 </footer>
 
 </body>
